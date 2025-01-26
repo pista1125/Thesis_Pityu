@@ -7,9 +7,10 @@ import math
 WIDTH, HEIGHT = 800, 600
 WHITE = (255, 255, 255)
 color = (0, 0, 245)
+color_2 = (100, 0, 0)
 BLACK = (0, 0, 0)
-BALL_RADIUS = 10
-INITIAL_SPEED = 5
+BALL_RADIUS = 5
+INITIAL_SPEED = 3
 
 # Initialize Pygame
 pygame.init()
@@ -26,6 +27,9 @@ class Ball:
         self.vx = vx
         self.vy = vy
         self.color = color
+
+    def update_color(self):
+        self.color = color_2
 
     def update(self):
         self.x += self.vx
@@ -48,8 +52,15 @@ class Ball:
 # Main function
 def main():
     balls = []
-    for x in range(50):
-        balls.append(Ball(random.randint(0, 800), random.randint(0, 600), BALL_RADIUS, random.randint(1, 5), random.randint(3,5)))
+    chemical = []
+    for x in range(300):
+        balls.append(Ball(random.randint(10, 790), random.randint(10, 590), BALL_RADIUS, random.randint(1, 5), random.randint(3,5)))
+
+    #if I want chemical
+    for x in range(10):
+        balls[x].__init__(random.randint(10, 40), random.randint(10, 40), BALL_RADIUS, random.randint(1, 5), random.randint(3,5))
+        balls[x].update_color()
+
     running = True
     while running:
         screen.fill(WHITE)
