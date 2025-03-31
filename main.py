@@ -1,88 +1,54 @@
-import random
+
+
+white = (0,0,0)
+
+
 import pygame
-import sys
-import math
+import button
 
-# Constants
-WIDTH, HEIGHT = 800, 600
-WHITE = (255, 255, 255)
-color = (0, 0, 245)
-color_2 = (100, 0, 0)
-BLACK = (0, 0, 0)
-BALL_RADIUS = 5
-INITIAL_SPEED = 3
-
-# Initialize Pygame
 pygame.init()
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("2D Ball Motion with Collisions")
-clock = pygame.time.Clock()
 
-# Ball class
-class Ball:
-    def __init__(self, x, y, radius, vx, vy):
-        self.x = x
-        self.y = y
-        self.radius = radius
-        self.vx = vx
-        self.vy = vy
-        self.color = color
 
-    def update_color(self):
-        self.color = color_2
+screen = pygame.display.set_mode((840, 600))
+pygame.display.set_caption("Főmenű")
 
-    def update(self):
-        self.x += self.vx
-        self.y += self.vy
+main = True
+run  = True
+game = None
+while run:
 
-        if self.x + self.radius >= WIDTH or self.x - self.radius <= 0:
-            self.vx *= -1
-        if self.y + self.radius >= HEIGHT or self.y - self.radius <= 0:
-            self.vy *= -1
+    screen.fill((0,0,0))
 
-    def draw(self, screen):
-        pygame.draw.circle(screen, self.color, (int(self.x), int(self.y)), self.radius)
+    diff_button = button.Button("Diffúzió", (0, 0, 255), (100, 100), 40)
+    boly_button = button.Button("Bolyongás", (0, 0, 255), (450, 100), 40)
+    brow_button = button.Button("Brown mozgás", (0, 0, 255), (100, 300), 40)
+    pass_button = button.Button("Pass", (0, 0, 255), (450, 300), 40)
+    exit_button = button.Button("Kilépés", (0, 0, 255), (340, 500), 40)
+    if main:
+        a = diff_button.draw(screen)
+        b = boly_button.draw(screen)
+        c = brow_button.draw(screen)
+        d = pass_button.draw(screen)
+        e = exit_button.draw(screen)
 
-    def collide_with_other_ball(self, other_ball):
-        distance = math.sqrt((self.x - other_ball.x)**2 + (self.y - other_ball.y)**2)
-        if distance <= self.radius + other_ball.radius:
-            self.vx *= -1
-            self.vy *= -1
+        if a:
+            main = False
+            game = 1
+        elif b:
+            main = False
+            game = 2
+        elif c:
+            main = False
+            game = 3
+        elif d:
+            main = False
+            game = 4
+    if game == 1:
+        pygame.display.set_caption("Diffúzió")
 
-# Main function
-def main():
-    balls = []
-    chemical = []
-    for x in range(300):
-        balls.append(Ball(random.randint(10, 790), random.randint(10, 590), BALL_RADIUS, random.randint(1, 5), random.randint(3,5)))
+    for event in pygame.event.get():
 
-    #if I want chemical
-    for x in range(10):
-        balls[x].__init__(random.randint(10, 40), random.randint(10, 40), BALL_RADIUS, random.randint(1, 5), random.randint(3,5))
-        balls[x].update_color()
-
-    running = True
-    while running:
-        screen.fill(WHITE)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-
-        for ball in balls:
-            ball.update()
-            ball.draw(screen)
-
-        # Check collisions between balls
-        for i in range(len(balls)):
-            for j in range(i + 1, len(balls)):
-                balls[i].collide_with_other_ball(balls[j])
-
-        pygame.display.flip()
-        clock.tick(60)
-
-    pygame.quit()
-    sys.exit()
-
-if __name__ == "__main__":
-    main()
+        if event.type == pygame.QUIT:
+            game = False
+            pygame.quit()
+    pygame.display.update()
