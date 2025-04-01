@@ -2,6 +2,7 @@ import pygame
 
 class Button():
     def __init__(self, text, color, pos, size):
+        self.color = color
         self.font = pygame.font.SysFont("Times New Roman", size)
         self.text = self.font.render(text, True, color)
         self.pos =self.text.get_rect(topleft=pos)
@@ -20,3 +21,6 @@ class Button():
                 action = True
 
         return action
+
+    def update_name(self, text):
+        self.text = self.font.render(text, True, self.color)

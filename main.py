@@ -22,12 +22,19 @@ brow_button = button.Button("Brown mozgás", (0, 0, 255), (100, 300), 40)
 pass_button = button.Button("Pass", (0, 0, 255), (450, 300), 40)
 exit_button = button.Button("Kilépés", (0, 0, 255), (340, 500), 40)
 
+#game 1 Start button
+
+start_button = button.Button("Start", (255,0,0), (700, 50), 40)
+
 
 BALL_RADIUS = 5
 INITIAL_SPEED = 3
 balls = []
 chemical = []
 start = 0
+pause = False
+pause_button = 1
+game1_start = False
 
 
 while run:
@@ -66,8 +73,20 @@ while run:
         if event.type == pygame.QUIT:
             game = False
             pygame.quit()
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if start_button.pos.collidepoint(event.pos) and pause_button % 2 ==0:
+                game1_start = False
+                pause_button += 1
+                start_button.update_name("Start")
+            elif start_button.pos.collidepoint(event.pos) and pause_button % 2 ==1:
+                game1_start = True
+                pause_button += 1
+                start_button.update_name("Stop")
+
 
     if game == 1:
+        screen.fill((0, 0, 0))
+        start_button.draw(screen)
 
         if start == 0:
 
@@ -81,10 +100,10 @@ while run:
                                   random.randint(3, 5))
                 balls[x].update_color()
             start = 1
-
         for ball in balls:
-            ball.update()
             ball.draw(screen)
+            if game1_start == True:
+                ball.update()
 
                 # Check collisions between balls
         for i in range(len(balls)):
@@ -93,4 +112,5 @@ while run:
 
         pygame.display.flip()
         clock.tick(60)
+
     pygame.display.update()
