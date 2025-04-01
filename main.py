@@ -1,13 +1,13 @@
 import time
-
 import pygame
 import button
 import random
-
 from diffuzio import Ball
 
+WIDTH, HEIGHT = 840, 600
+
 pygame.init()
-screen = pygame.display.set_mode((840, 600))
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Főmenű")
 clock = pygame.time.Clock()
 
@@ -16,15 +16,16 @@ main = True
 run  = True
 game = None
 
-diff_button = button.Button("Diffúzió", (0, 0, 255), (100, 100), 40)
-boly_button = button.Button("Bolyongás", (0, 0, 255), (450, 100), 40)
-brow_button = button.Button("Brown mozgás", (0, 0, 255), (100, 300), 40)
-pass_button = button.Button("Pass", (0, 0, 255), (450, 300), 40)
-exit_button = button.Button("Kilépés", (0, 0, 255), (340, 500), 40)
+diff_button = button.Button("Diffúzió", (0, 0, 255), (WIDTH/4, 100), 40)
+boly_button = button.Button("Bolyongás", (0, 0, 255), ((WIDTH/4)*3, 100), 40)
+brow_button = button.Button("Brown mozgás", (0, 0, 255), (WIDTH/4, 300), 40)
+pass_button = button.Button("Pass", (0, 0, 255), ((WIDTH/4)*3, 300), 40)
+exit_button = button.Button("Kilépés", (0, 0, 255), (WIDTH/2, 500), 40)
 
 #game 1 Start button
 
-start_button = button.Button("Start", (255,0,0), (700, 50), 40)
+start_button = button.Button("Start", (255,0,0), ((WIDTH/5)*4, 100), 40)
+time_tittle = button.Button("00:00", (255,0,0), (WIDTH/2, 50), 40)
 
 
 BALL_RADIUS = 5
@@ -35,6 +36,12 @@ start = 0
 pause = False
 pause_button = 1
 game1_start = False
+
+# Stopper változók
+running = True
+stopper_running = False
+start_time = 0
+elapsed_time = 0
 
 
 while run:
@@ -78,20 +85,33 @@ while run:
                 game1_start = False
                 pause_button += 1
                 start_button.update_name("Start")
+                stopper_running = False
             elif start_button.pos.collidepoint(event.pos) and pause_button % 2 ==1:
                 game1_start = True
                 pause_button += 1
                 start_button.update_name("Stop")
+                stopper_running = True
+                start_time = time.time() - elapsed_time
 
 
     if game == 1:
         screen.fill((0, 0, 0))
         start_button.draw(screen)
+        time_tittle.draw(screen)
+        if stopper_running:
+            elapsed_time = time.time() - start_time
+        # Idő formázása
+        minutes = int(elapsed_time // 60)
+        seconds = int(elapsed_time % 60)
+        milliseconds = int((elapsed_time * 100) % 100)
+        time_text = f"{seconds:02}:{milliseconds:02}"
+
+        time_tittle.update_name(time_text)
 
         if start == 0:
 
             for x in range(300):
-                balls.append(Ball(random.randint(10, 700), random.randint(10, 500), BALL_RADIUS, random.randint(1, 5),
+                balls.append(Ball(random.randint(10, WIDTH), random.randint(10, HEIGHT), BALL_RADIUS, random.randint(1, 5),
                                   random.randint(3, 5)))
 
             #if I want chemical
@@ -111,6 +131,8 @@ while run:
                 balls[i].collide_with_other_ball(balls[j])
 
         pygame.display.flip()
-        clock.tick(60)
+        clock.tick(30)
 
     pygame.display.update()
+
+pygame.quit()

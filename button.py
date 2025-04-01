@@ -5,7 +5,7 @@ class Button():
         self.color = color
         self.font = pygame.font.SysFont("Times New Roman", size)
         self.text = self.font.render(text, True, color)
-        self.pos =self.text.get_rect(topleft=pos)
+        self.pos =self.text.get_rect(center=pos)
 
     def draw(self, screen):
         action = False
