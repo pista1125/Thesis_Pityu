@@ -4,13 +4,14 @@ class Button():
     def __init__(self, text, color, pos, size):
         self.color = color
         self.font = pygame.font.SysFont("Times New Roman", size)
-        self.text = self.font.render(text, True, color)
-        self.pos =self.text.get_rect(center=pos)
+        self.text = self.font.render(text, True, self.color)
+        self.pos = pos
+        self.pos =self.text.get_rect(center=self.pos)
 
-    def draw(self, screen):
+    def draw(self, screen, rect_color):
         action = False
         self.blit = screen.blit(self.text, self.pos)
-        pygame.draw.rect(screen, (0, 0, 255), self.pos, 2)
+        pygame.draw.rect(screen, (rect_color), self.pos, 3)
 
         # get mouse position
         pos = pygame.mouse.get_pos()
@@ -24,3 +25,7 @@ class Button():
 
     def update_name(self, text):
         self.text = self.font.render(text, True, self.color)
+
+    def update_place(self, x, y):
+        self.pos[0] += x
+        self.pos[1] += y
