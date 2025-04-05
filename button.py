@@ -29,3 +29,6 @@ class Button():
     def update_place(self, x, y):
         self.pos[0] += x
         self.pos[1] += y
+
+    def draw_time(self, screen):
+        self.blit = screen.blit(self.text, self.pos)

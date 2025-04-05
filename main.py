@@ -33,6 +33,8 @@ exit_button = button.Button("Kilépés", (0, 0, 255), (WIDTH/2, 500), 40)
 start_button = button.Button("Start", (255,0,0), ((WIDTH/5)*4, 100), 40)
 time_tittle = button.Button("00:00:00", (255,0,0), (WIDTH/2, 50), 40)
 ball_box = button.Button("      ", (0,0,255), (WIDTH/2, HEIGHT/2), 40)
+ball_box_title = []
+
 
 
 BALL_RADIUS = 5
@@ -46,7 +48,7 @@ brick_color = BlUE
 akadalyok = []
 catch = 0
 catch_1, catch_2, catch_3, catch_4 = False, False, False, False
-catch_time = []
+catch_time_1, catch_time_2, catch_time_3, catch_time_4 = None, None, None, None
 start = 0
 pause = False
 pause_button = 1
@@ -139,14 +141,12 @@ while run:
         if pause_button == 1:
             ball_box.draw(screen, RED)
 
-
-
-
         if start == 0:
-
+            #akadalyok megrajzolasa
             for hely in brick_hely:
                 akadalyok.append(Brick(brick_color, hely, 25))
-
+                ball_box_title.append(button.Button("    ", GREEN, (hely[0]-30, hely[1]), 30))
+            #labdák megrajzolasa
             for x in range(300):
                 balls.append(
                     Ball(random.randint(10, WIDTH), random.randint(10, HEIGHT), BALL_RADIUS, random.choice(INITIAL_SPEED),
@@ -202,24 +202,43 @@ while run:
                 if catch_1 == False:
                     catch_1 = True
                     catch += 1
+                    catch_time_1 = time_text
             if distance_2 < 25 and pause_button > 1:
                 akadalyok[1].update_color(RED)
                 if catch_2 == False:
                     catch_2 = True
                     catch += 1
+                    catch_time_2 = time_text
             if distance_3 < 25 and pause_button > 1:
                 akadalyok[2].update_color(RED)
                 if catch_3 == False:
                     catch_3 = True
                     catch += 1
+                    catch_time_3 = time_text
             if distance_4 < 25 and pause_button > 1:
                 akadalyok[3].update_color(RED)
                 if catch_4 == False:
                     catch_4 = True
                     catch += 1
+                    catch_time_4 = time_text
         if catch == 4:
             stopper_running = False
 
+        if catch_1:
+            ball_box_title[0].draw_time(screen)
+            ball_box_title[0].update_name(catch_time_1)
+
+        if catch_2:
+            ball_box_title[1].draw_time(screen)
+            ball_box_title[1].update_name(catch_time_2)
+
+        if catch_3:
+            ball_box_title[2].draw_time(screen)
+            ball_box_title[2].update_name(catch_time_3)
+
+        if catch_4:
+            ball_box_title[3].draw_time(screen)
+            ball_box_title[3].update_name(catch_time_4)
         pygame.display.flip()
         clock.tick(30)
 

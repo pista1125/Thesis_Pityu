@@ -53,9 +53,11 @@ class Brick:
         self.color = color
         self.hely = hely
         self.sugar = sugar
-
+        self.square = pygame.Rect(10, 10, 30, 30)
     def draw(self, screen):
         pygame.draw.circle(screen, self.color, self.hely, self.sugar)
-
     def update_color(self, update_color):
         self.color = update_color
+
+    def square(self, screen):
+        pygame.draw.rect(screen, self.color, self.square)
