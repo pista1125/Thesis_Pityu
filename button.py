@@ -1,8 +1,12 @@
 import pygame
 
+
+GREEN = (6, 206, 89)
+
 class Button():
     def __init__(self, text, color, pos, size):
         self.color = color
+        self.texting = text
         self.font = pygame.font.SysFont("Times New Roman", size)
         self.text = self.font.render(text, True, self.color)
         self.pos = pos
@@ -10,11 +14,23 @@ class Button():
 
     def draw(self, screen, rect_color):
         action = False
-        self.blit = screen.blit(self.text, self.pos)
-        pygame.draw.rect(screen, (rect_color), self.pos, 3)
+        pos = pygame.mouse.get_pos()
+
+        if self.pos.collidepoint(pos):
+            self.color = GREEN
+            self.blit = screen.blit(self.text, self.pos)
+            self.text = self.font.render(self.texting, True, self.color)
+            pygame.draw.rect(screen, (rect_color), self.pos, 3)
+        else:
+            self.color = (0, 0, 255)
+            self.blit = screen.blit(self.text, self.pos)
+            pygame.draw.rect(screen, (rect_color), self.pos, 3)
+            self.text = self.font.render(self.texting, True, self.color)
+
+        # self.blit = screen.blit(self.text, self.pos)
+        # pygame.draw.rect(screen, (rect_color), self.pos, 3)
 
         # get mouse position
-        pos = pygame.mouse.get_pos()
 
         # check mouseover and clicked conditions
         if self.pos.collidepoint(pos):
