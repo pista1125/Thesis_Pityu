@@ -20,11 +20,11 @@ class Button():
             self.color = GREEN
             self.blit = screen.blit(self.text, self.pos)
             self.text = self.font.render(self.texting, True, self.color)
-            pygame.draw.rect(screen, (rect_color), self.pos, 3)
+            pygame.draw.rect(screen, rect_color, self.pos, 3)
         else:
             self.color = (0, 0, 255)
             self.blit = screen.blit(self.text, self.pos)
-            pygame.draw.rect(screen, (rect_color), self.pos, 3)
+            pygame.draw.rect(screen, rect_color, self.pos, 3)
             self.text = self.font.render(self.texting, True, self.color)
 
         # self.blit = screen.blit(self.text, self.pos)

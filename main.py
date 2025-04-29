@@ -122,19 +122,19 @@ while run:
                 #Kezdeti mozgatás az illatmolekuláknak
                 if event.key == pygame.K_RIGHT:
                     for x in range(illat_labdak):
-                        balls[x].update_place(40, 0)
+                        balls[x].update_place(30, 0)
                         ball_box.update_place(1, 0)
                 elif event.key == pygame.K_LEFT:
                     for x in range(illat_labdak):
-                        balls[x].update_place(-40, 0)
+                        balls[x].update_place(-30, 0)
                         ball_box.update_place(-1, 0)
                 elif event.key == pygame.K_UP:
                     for x in range(illat_labdak):
-                        balls[x].update_place(0, -40)
+                        balls[x].update_place(0, -30)
                         ball_box.update_place(0, -1)
                 elif event.key == pygame.K_DOWN:
                     for x in range(illat_labdak):
-                        balls[x].update_place(0, 40)
+                        balls[x].update_place(0, 30)
                         ball_box.update_place(0, 1)
 
 
