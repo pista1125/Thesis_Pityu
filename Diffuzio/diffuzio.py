@@ -48,6 +48,14 @@ class Ball:
         self.x += x
         self.y += y
 
+    def update_speed(self):
+        self.vx *= 1.5
+        self.vy *= 1.5
+
+    def update_speed_low(self):
+        self.vx *= 0.5
+        self.vy *= 0.5
+
 class Brick:
     def __init__(self, color, hely, sugar):
         self.color = color

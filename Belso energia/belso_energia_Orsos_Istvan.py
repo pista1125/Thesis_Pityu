@@ -18,7 +18,7 @@ RED = (255, 50, 50)
 CYAN = (0, 200, 200)
 
 # Molekula beállítások
-NUM_BALLS = 200
+NUM_BALLS = 300
 BALL_RADIUS = 5
 
 font = pygame.font.SysFont(None, 26)
@@ -50,15 +50,19 @@ class Ball:
         self.y = random.randint(BALL_RADIUS + 100, HEIGHT - BALL_RADIUS)
         self.vx = random.uniform(-2, 2)
         self.vy = random.uniform(-2, 2)
+        self.nyomas = 0
 
     def move(self):
         self.x += self.vx
         self.y += self.vy
 
-        if self.x <= BALL_RADIUS or self.x >= WIDTH - BALL_RADIUS:
+        if self.x <= BALL_RADIUS or self.x >= WIDTH -  + BALL_RADIUS:
             self.vx *= -1
         if self.y <= BALL_RADIUS + 100 or self.y >= HEIGHT - BALL_RADIUS:
             self.vy *= -1
+
+
+
 
     def draw(self, screen):
         pygame.draw.circle(screen, BLUE, (int(self.x), int(self.y)), BALL_RADIUS)
@@ -79,7 +83,6 @@ def set_hot():
     state = 'hot'
     for b in balls:
         b.set_speed_multiplier(1.5)
-
 def set_cold():
     global state
     state = 'cold'
@@ -142,8 +145,9 @@ while running:
     temp = int(avg_speed * 100)
     pygame.draw.rect(screen, WHITE, (650, 20, 200, 40), border_radius=10)
     pygame.draw.rect(screen, RED, (650, 20, min(temp * 2, 200), 40), border_radius=10)
-    temp_text = font.render(f"Hőmérséklet: {temp} °C", True, BLACK)
+    temp_text = font.render(f"Hőmérséklet: {temp} K", True, BLACK)
     screen.blit(temp_text, (660, 30))
+
 
     pygame.display.flip()
     clock.tick(60)

@@ -27,7 +27,7 @@ game_2_menu = True
 
 #szovegmezo
 game_2_input_box = pygame.Rect((WIDTH/2)-150, (HEIGHT/2)-150, 320, 40)
-game_2_user_text = 'Piros labdák száma:'
+game_2_user_text = 'Piros golyók száma:'
 active = False
 
 # Gomb
@@ -121,6 +121,12 @@ while run:
                     for x in range(illat_labdak):
                         balls[x].update_place(0, 30)
                         ball_box.update_place(0, 1)
+            if event.key == pygame.K_r:
+                for x in balls:
+                    x.update_speed()
+            if event.key == pygame.K_t:
+                for c in balls:
+                    c.update_speed_low()
 
     if game_2_menu == True:
 
